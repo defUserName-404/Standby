@@ -23,7 +23,7 @@ Check off as you go. Don't start a task whose dependencies aren't checked.
 - [x] **5. `AppSettings` model + `SettingsRepository` (minimal: just `triggerMode` for now)** — DataStore-backed, JSON via kotlinx.serialization, `schemaVersion` field from day one.
     - _Requirements: 10.1, 10.2_
 
-- [ ] **6. `TriggerEvaluatorUseCase`** — combine `PowerStateRepository` + `SettingsRepository.triggerMode`, emit launch events via `SharedFlow`.
+- [x] **6. `TriggerEvaluatorUseCase`** — combine `PowerStateRepository` + `SettingsRepository.triggerMode`, emit launch events via `SharedFlow`.
     - _Requirements: 1.1, 1.2, 1.3_
 
 - [ ] **7. `SessionStateHolder`** — shared `isStandByCurrentlyShowing` flag.
