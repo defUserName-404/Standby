@@ -8,10 +8,10 @@ Check off as you go. Don't start a task whose dependencies aren't checked.
 
 ### Phase 1 — Trigger skeleton (validate the riskiest part first)
 
-- [ ] **1. Project setup** — Gradle module, package structure per `design.md`/`standby_clone_system_architecture.md` §9, Hilt wired up empty.
+- [x] **1. Project setup** — Gradle module, package structure per `design.md`/`standby_clone_system_architecture.md` §9, Hilt wired up empty.
     - _Foundational, no specific acceptance criteria._
 
-- [ ] **2. `PowerStateRepository` + `ScreenPowerReceiver`** — dynamically-registered receiver for `SCREEN_ON`, `SCREEN_OFF`, `USER_PRESENT`, `POWER_CONNECTED`, `POWER_DISCONNECTED`; expose `StateFlow<PowerState>`.
+- [x] **2. `PowerStateRepository` + `ScreenPowerReceiver`** — dynamically-registered receiver for `SCREEN_ON`, `SCREEN_OFF`, `USER_PRESENT`, `POWER_CONNECTED`, `POWER_DISCONNECTED`; expose `StateFlow<PowerState>`.
     - _Requirements: 1.1, 1.2, 1.3_
 
 - [ ] **3. `StandByMonitorService`** — foreground service hosting the receiver's lifecycle and a coroutine scope; persistent notification; `START_STICKY`.
