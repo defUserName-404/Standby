@@ -17,7 +17,7 @@ Check off as you go. Don't start a task whose dependencies aren't checked.
 - [x] **3. `StandByMonitorService`** — foreground service hosting the receiver's lifecycle and a coroutine scope; persistent notification; `START_STICKY`.
     - _Requirements: 12.1, 12.3_
 
-- [ ] **4. `BootReceiver`** — manifest-registered, restarts `StandByMonitorService` after reboot.
+- [x] **4. `BootReceiver`** — manifest-registered, restarts `StandByMonitorService` after reboot.
     - _Requirements: 1.5, 12.2_
 
 - [ ] **5. `AppSettings` model + `SettingsRepository` (minimal: just `triggerMode` for now)** — DataStore-backed, JSON via kotlinx.serialization, `schemaVersion` field from day one.
