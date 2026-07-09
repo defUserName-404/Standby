@@ -29,6 +29,14 @@
             </intent-filter>
         </activity>
 
+        <activity
+            android:name=".presentation.standby.StandByActivity"
+            android:exported="false"
+            android:taskAffinity=""
+            android:showOnLockScreen="true"
+            android:showWhenLocked="true"
+            android:theme="@style/Theme.Standby.Overlay" />
+
         <service
             android:name=".service.StandByMonitorService"
             android:exported="false"

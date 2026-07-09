@@ -8,12 +8,15 @@ import android.content.pm.ServiceInfo
 import android.os.IBinder
 import androidx.core.app.NotificationCompat
 import com.defusername.standby.R
+import com.defusername.standby.data.platform.StandByLauncher
 import com.defusername.standby.data.repository.PowerStateRepositoryImpl
+import com.defusername.standby.domain.usecase.TriggerEvaluatorUseCase
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.cancel
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -21,6 +24,12 @@ class StandByMonitorService : Service() {
 
     @Inject
     lateinit var powerStateRepository: PowerStateRepositoryImpl
+
+    @Inject
+    lateinit var triggerEvaluator: TriggerEvaluatorUseCase
+
+    @Inject
+    lateinit var standByLauncher: StandByLauncher
 
     private val serviceScope = CoroutineScope(SupervisorJob() + Dispatchers.Default)
 
@@ -33,6 +42,7 @@ class StandByMonitorService : Service() {
             ServiceInfo.FOREGROUND_SERVICE_TYPE_SPECIAL_USE
         )
         powerStateRepository.registerReceiver()
+        collectLaunchEvents()
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
@@ -46,6 +56,14 @@ class StandByMonitorService : Service() {
     }
 
     override fun onBind(intent: Intent?): IBinder? = null
+
+    private fun collectLaunchEvents() {
+        serviceScope.launch {
+            triggerEvaluator.launchEvents.collect {
+                standByLauncher.launch()
+            }
+        }
+    }
 
     private fun createNotificationChannel() {
         val channel = NotificationChannel(

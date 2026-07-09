@@ -26,10 +26,10 @@ Check off as you go. Don't start a task whose dependencies aren't checked.
 - [x] **6. `TriggerEvaluatorUseCase`** — combine `PowerStateRepository` + `SettingsRepository.triggerMode`, emit launch events via `SharedFlow`.
     - _Requirements: 1.1, 1.2, 1.3_
 
-- [ ] **7. `SessionStateHolder`** — shared `isStandByCurrentlyShowing` flag.
+- [x] **7. `SessionStateHolder`** — shared `isStandByCurrentlyShowing` flag.
     - _Requirements: 1.4_
 
-- [ ] **8. `StandByLauncher` + bare `StandByActivity`** — window flags (`setShowWhenLocked`, `setTurnScreenOn`, keep-screen-on), shows just a clock; tap to dismiss.
+- [x] **8. `StandByLauncher` + bare `StandByActivity`** — window flags (`setShowWhenLocked`, `setTurnScreenOn`, keep-screen-on), shows just a clock; tap to dismiss.
     - _Requirements: 2.1, 2.2, 2.3, 2.4, 3.1, 3.3_
 
 - [ ] **9. Manual validation checkpoint** — on your actual device: lock screen, plug in charger, confirm the clock screen appears within 1s and dismisses on tap. Test with battery optimization *not yet* exempted to see real-world OEM behavior before building anything else.

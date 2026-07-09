@@ -6,8 +6,12 @@ import com.defusername.standby.domain.repository.PowerStateRepository
 import com.defusername.standby.domain.repository.SettingsRepository
 import dagger.Binds
 import dagger.Module
+import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
 import javax.inject.Singleton
 
 @Module
@@ -25,4 +29,12 @@ abstract class AppModule {
     abstract fun bindSettingsRepository(
         impl: SettingsRepositoryImpl
     ): SettingsRepository
+
+    companion object {
+        @Provides
+        @Singleton
+        fun provideApplicationScope(): CoroutineScope {
+            return CoroutineScope(SupervisorJob() + Dispatchers.Default)
+        }
+    }
 }
