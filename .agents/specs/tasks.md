@@ -20,7 +20,7 @@ Check off as you go. Don't start a task whose dependencies aren't checked.
 - [x] **4. `BootReceiver`** — manifest-registered, restarts `StandByMonitorService` after reboot.
     - _Requirements: 1.5, 12.2_
 
-- [ ] **5. `AppSettings` model + `SettingsRepository` (minimal: just `triggerMode` for now)** — DataStore-backed, JSON via kotlinx.serialization, `schemaVersion` field from day one.
+- [x] **5. `AppSettings` model + `SettingsRepository` (minimal: just `triggerMode` for now)** — DataStore-backed, JSON via kotlinx.serialization, `schemaVersion` field from day one.
     - _Requirements: 10.1, 10.2_
 
 - [ ] **6. `TriggerEvaluatorUseCase`** — combine `PowerStateRepository` + `SettingsRepository.triggerMode`, emit launch events via `SharedFlow`.
