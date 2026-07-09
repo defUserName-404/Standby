@@ -8,28 +8,28 @@ Check off as you go. Don't start a task whose dependencies aren't checked.
 
 ### Phase 1 — Trigger skeleton (validate the riskiest part first)
 
-- [ ] **1. Project setup** — Gradle module, package structure per `design.md`/`standby_clone_system_architecture.md` §9, Hilt wired up empty.
+- [x] **1. Project setup** — Gradle module, package structure per `design.md`/`standby_clone_system_architecture.md` §9, Hilt wired up empty.
     - _Foundational, no specific acceptance criteria._
 
-- [ ] **2. `PowerStateRepository` + `ScreenPowerReceiver`** — dynamically-registered receiver for `SCREEN_ON`, `SCREEN_OFF`, `USER_PRESENT`, `POWER_CONNECTED`, `POWER_DISCONNECTED`; expose `StateFlow<PowerState>`.
+- [x] **2. `PowerStateRepository` + `ScreenPowerReceiver`** — dynamically-registered receiver for `SCREEN_ON`, `SCREEN_OFF`, `USER_PRESENT`, `POWER_CONNECTED`, `POWER_DISCONNECTED`; expose `StateFlow<PowerState>`.
     - _Requirements: 1.1, 1.2, 1.3_
 
-- [ ] **3. `StandByMonitorService`** — foreground service hosting the receiver's lifecycle and a coroutine scope; persistent notification; `START_STICKY`.
+- [x] **3. `StandByMonitorService`** — foreground service hosting the receiver's lifecycle and a coroutine scope; persistent notification; `START_STICKY`.
     - _Requirements: 12.1, 12.3_
 
-- [ ] **4. `BootReceiver`** — manifest-registered, restarts `StandByMonitorService` after reboot.
+- [x] **4. `BootReceiver`** — manifest-registered, restarts `StandByMonitorService` after reboot.
     - _Requirements: 1.5, 12.2_
 
-- [ ] **5. `AppSettings` model + `SettingsRepository` (minimal: just `triggerMode` for now)** — DataStore-backed, JSON via kotlinx.serialization, `schemaVersion` field from day one.
+- [x] **5. `AppSettings` model + `SettingsRepository` (minimal: just `triggerMode` for now)** — DataStore-backed, JSON via kotlinx.serialization, `schemaVersion` field from day one.
     - _Requirements: 10.1, 10.2_
 
-- [ ] **6. `TriggerEvaluatorUseCase`** — combine `PowerStateRepository` + `SettingsRepository.triggerMode`, emit launch events via `SharedFlow`.
+- [x] **6. `TriggerEvaluatorUseCase`** — combine `PowerStateRepository` + `SettingsRepository.triggerMode`, emit launch events via `SharedFlow`.
     - _Requirements: 1.1, 1.2, 1.3_
 
-- [ ] **7. `SessionStateHolder`** — shared `isStandByCurrentlyShowing` flag.
+- [x] **7. `SessionStateHolder`** — shared `isStandByCurrentlyShowing` flag.
     - _Requirements: 1.4_
 
-- [ ] **8. `StandByLauncher` + bare `StandByActivity`** — window flags (`setShowWhenLocked`, `setTurnScreenOn`, keep-screen-on), shows just a clock; tap to dismiss.
+- [x] **8. `StandByLauncher` + bare `StandByActivity`** — window flags (`setShowWhenLocked`, `setTurnScreenOn`, keep-screen-on), shows just a clock; tap to dismiss.
     - _Requirements: 2.1, 2.2, 2.3, 2.4, 3.1, 3.3_
 
 - [ ] **9. Manual validation checkpoint** — on your actual device: lock screen, plug in charger, confirm the clock screen appears within 1s and dismisses on tap. Test with battery optimization *not yet* exempted to see real-world OEM behavior before building anything else.

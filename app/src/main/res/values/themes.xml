@@ -2,4 +2,11 @@
 <resources>
 
     <style name="Theme.Standby" parent="android:Theme.Material.Light.NoActionBar" />
+
+    <style name="Theme.Standby.Overlay" parent="android:Theme.Material.NoActionBar">
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowBackground">@android:color/black</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:navigationBarColor">@android:color/transparent</item>
+    </style>
 </resources>

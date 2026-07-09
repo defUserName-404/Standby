@@ -1,3 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">standby</string>
+    <string name="app_name">Standby</string>
+    <string name="monitor_service_channel_name">StandBy Monitoring</string>
+    <string name="monitor_service_channel_description">Keeps the StandBy screen trigger active</string>
+    <string name="monitor_service_notification_title">StandBy Active</string>
+    <string name="monitor_service_notification_text">Monitoring for screen-off triggers</string>
 </resources>
