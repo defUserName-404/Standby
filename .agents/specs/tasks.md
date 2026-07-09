@@ -14,7 +14,7 @@ Check off as you go. Don't start a task whose dependencies aren't checked.
 - [x] **2. `PowerStateRepository` + `ScreenPowerReceiver`** — dynamically-registered receiver for `SCREEN_ON`, `SCREEN_OFF`, `USER_PRESENT`, `POWER_CONNECTED`, `POWER_DISCONNECTED`; expose `StateFlow<PowerState>`.
     - _Requirements: 1.1, 1.2, 1.3_
 
-- [ ] **3. `StandByMonitorService`** — foreground service hosting the receiver's lifecycle and a coroutine scope; persistent notification; `START_STICKY`.
+- [x] **3. `StandByMonitorService`** — foreground service hosting the receiver's lifecycle and a coroutine scope; persistent notification; `START_STICKY`.
     - _Requirements: 12.1, 12.3_
 
 - [ ] **4. `BootReceiver`** — manifest-registered, restarts `StandByMonitorService` after reboot.
