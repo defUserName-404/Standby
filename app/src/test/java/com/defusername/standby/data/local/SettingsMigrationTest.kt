@@ -1,6 +1,7 @@
 package com.defusername.standby.data.local
 
 import com.defusername.standby.domain.model.AppSettings
+import com.defusername.standby.domain.model.OrientationMode
 import com.defusername.standby.domain.model.TriggerMode
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.booleanOrNull
@@ -78,6 +79,26 @@ class SettingsMigrationTest {
         assertEquals(false, settings.onboardingCompleted)
         assertEquals(false, settings.zenModeEnabled)
         assertTrue(settings.excludedPackages.isEmpty())
+        assertTrue(settings.enabledWidgetIds.isEmpty())
+        assertEquals(OrientationMode.AUTO, settings.orientationMode)
+    }
+
+    @Test
+    fun `v3 fixture migrates to current schema and preserves user values`() {
+        val v3Fixture = """
+            {"schemaVersion":3,"onboardingCompleted":true,"triggerMode":"CHARGING_ONLY","zenModeEnabled":true,"excludedPackages":["com.foo"]}
+        """.trimIndent()
+
+        val migrated = SettingsMigration.migrate(json.parseToJsonElement(v3Fixture).jsonObject)
+        val settings = json.decodeFromJsonElement(AppSettings.serializer(), migrated)
+
+        assertEquals(AppSettings.CURRENT_SCHEMA_VERSION, settings.schemaVersion)
+        assertEquals(true, settings.onboardingCompleted)
+        assertEquals(TriggerMode.CHARGING_ONLY, settings.triggerMode)
+        assertEquals(true, settings.zenModeEnabled)
+        assertEquals(setOf("com.foo"), settings.excludedPackages)
+        assertTrue(settings.enabledWidgetIds.isEmpty())
+        assertEquals(OrientationMode.AUTO, settings.orientationMode)
     }
 
     @Test

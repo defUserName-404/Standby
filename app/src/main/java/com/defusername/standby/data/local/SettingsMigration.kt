@@ -46,6 +46,16 @@ object SettingsMigration {
                     "excludedPackages" to JsonArray(emptyList())
                 )
             )
+        },
+        // v3 -> v4: adds enabledWidgetIds and orientationMode (both defaulted).
+        3 to { json ->
+            JsonObject(
+                json + mapOf(
+                    "schemaVersion" to JsonPrimitive(4),
+                    "enabledWidgetIds" to JsonArray(emptyList()),
+                    "orientationMode" to JsonPrimitive("AUTO")
+                )
+            )
         }
     )
 }

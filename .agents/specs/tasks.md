@@ -120,7 +120,7 @@ Check off as you go. Don't start a task whose dependencies aren't checked.
 
 ### Phase 6 — Orientation
 
-- [ ] **31. `OrientationController`** — sets `requestedOrientation` from `SettingsRepository.orientationMode`.
+- [x] **31. `OrientationController`** — sets `requestedOrientation` from `SettingsRepository.orientationMode`.
     - _Requirements: 6.1, 6.2, 6.3_
 
 - [ ] **32. Orientation setting UI** — landscape-only / portrait-only / auto.
