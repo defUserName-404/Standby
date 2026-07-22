@@ -8,8 +8,11 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.detectTapGestures
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Text
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -21,8 +24,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.defusername.standby.data.SessionStateHolder
+import com.defusername.standby.domain.repository.NotificationRepository
 import com.defusername.standby.domain.repository.PowerStateRepository
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
@@ -39,6 +46,9 @@ class StandByActivity : ComponentActivity() {
 
     @Inject
     lateinit var powerStateRepository: PowerStateRepository
+
+    @Inject
+    lateinit var notificationRepository: NotificationRepository
 
     private var wakeLock: PowerManager.WakeLock? = null
 
@@ -57,6 +67,8 @@ class StandByActivity : ComponentActivity() {
 
         setContent {
             var timeText by remember { mutableStateOf(formatTime()) }
+            val notifications by notificationRepository.notifications.collectAsStateWithLifecycle()
+            val latest = notifications.firstOrNull()
 
             LaunchedEffect(Unit) {
                 while (true) {
@@ -88,13 +100,23 @@ class StandByActivity : ComponentActivity() {
                     },
                 contentAlignment = Alignment.Center
             ) {
-                Text(
-                    text = timeText,
-                    style = TextStyle(
-                        color = Color.White,
-                        fontSize = 72.sp
+                Column(
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.Center
+                ) {
+                    Text(
+                        text = timeText,
+                        style = TextStyle(color = Color.White, fontSize = 72.sp)
                     )
-                )
+                    if (latest != null) {
+                        Text(
+                            text = "${latest.appLabel}: ${latest.title}${if (latest.text.isNotBlank()) " — ${latest.text}" else ""}",
+                            style = TextStyle(color = Color.White, fontSize = 18.sp),
+                            textAlign = TextAlign.Center,
+                            modifier = Modifier.padding(top = 24.dp, start = 32.dp, end = 32.dp)
+                        )
+                    }
+                }
             }
         }
     }
