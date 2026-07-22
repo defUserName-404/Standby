@@ -3,13 +3,15 @@ package com.defusername.standby.service
 import android.service.notification.NotificationListenerService
 import android.service.notification.StatusBarNotification
 import android.util.Log
+import com.defusername.standby.data.notification.NotificationMapper
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
-/**
- * Stub notification listener — exists so the app appears in
- * Settings → Notification access and the onboarding deep-link has a target.
- * Real capture/mapping is wired up in the notification-pipeline phase (tasks 15-16).
- */
+@AndroidEntryPoint
 class StandByNotificationListenerService : NotificationListenerService() {
+
+    @Inject
+    lateinit var notificationMapper: NotificationMapper
 
     override fun onListenerConnected() {
         Log.i(TAG, "Notification listener connected")
@@ -20,11 +22,15 @@ class StandByNotificationListenerService : NotificationListenerService() {
     }
 
     override fun onNotificationPosted(sbn: StatusBarNotification?) {
-        // No-op until the NotificationMapper/NotificationRepository pipeline lands.
+        val entry = sbn?.let(notificationMapper::map) ?: return
+        Log.d(TAG, "Notification posted: ${entry.appLabel} — ${entry.title}")
+        // Forwarding to NotificationRepository lands in task 16.
     }
 
     override fun onNotificationRemoved(sbn: StatusBarNotification?) {
-        // No-op until the NotificationMapper/NotificationRepository pipeline lands.
+        val entry = sbn?.let(notificationMapper::map) ?: return
+        Log.d(TAG, "Notification removed: ${entry.appLabel} — ${entry.title}")
+        // Forwarding to NotificationRepository lands in task 16.
     }
 
     private companion object {
