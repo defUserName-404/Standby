@@ -5,4 +5,8 @@
     <string name="monitor_service_channel_description">Keeps the StandBy screen trigger active</string>
     <string name="monitor_service_notification_title">StandBy Active</string>
     <string name="monitor_service_notification_text">Monitoring for screen-off triggers</string>
+    <string name="listener_health_channel_name">StandBy Alerts</string>
+    <string name="listener_health_channel_description">Prompts to re-enable notification access when it is silently revoked</string>
+    <string name="listener_health_notification_title">Notification access was turned off</string>
+    <string name="listener_health_notification_text">Tap to re-enable so StandBy can show your latest notification.</string>
 </resources>
