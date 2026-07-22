@@ -79,7 +79,7 @@ Check off as you go. Don't start a task whose dependencies aren't checked.
 - [x] **19. Extend `AppSettings`** — add `zenModeEnabled`, `excludedPackages`, `schemaVersion` bump using the migration scaffolding from task 12.
     - _Requirements: 10.3_
 
-- [ ] **20. `ZenState` + `NotificationFilterUseCase`** — pure function `(rawList, zenState, excludeList) → DisplayableNotification`.
+- [x] **20. `ZenState` + `NotificationFilterUseCase`** — pure function `(rawList, zenState, excludeList) → DisplayableNotification`.
     - _Requirements: 4.4, 5.1, 5.2, 5.3_
 
 - [ ] **21. Settings home screen (replaces `MainActivity` placeholder)** — trigger mode, zen mode toggle, exclude-list picker (from currently-installed apps), plus a permission-status summary that re-surfaces degraded grants per 11.4 outside of onboarding.
