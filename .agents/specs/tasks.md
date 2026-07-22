@@ -95,7 +95,7 @@ Check off as you go. Don't start a task whose dependencies aren't checked.
 - [x] **23. Define `WidgetSpec`, `WidgetDataSource` contracts** — no implementations yet, just the interfaces.
     - _Requirements: 9.1_
 
-- [ ] **24. `WidgetRegistry`** — Hilt multibinding assembling `WidgetSpec` + Composable renderer pairs.
+- [x] **24. `WidgetRegistry`** — Hilt multibinding assembling `WidgetSpec` + Composable renderer pairs.
     - _Requirements: 9.1_
 
 - [ ] **25. Refactor clock into a widget** — first implementation against the new contract.
