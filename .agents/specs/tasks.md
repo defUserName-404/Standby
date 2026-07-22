@@ -104,7 +104,7 @@ Check off as you go. Don't start a task whose dependencies aren't checked.
 - [x] **26. Refactor notification display into a widget** — second implementation; this is where contract gaps usually surface — fix the contract now, not later.
     - _Requirements: 9.1, 9.2, 9.3, 9.4_
 
-- [ ] **27. Add battery widget as the third proof case** — uses `PowerStateRepository.batteryPercent`; if this drops in cleanly, the contract is validated.
+- [x] **27. Add battery widget as the third proof case** — uses `PowerStateRepository.batteryPercent`; if this drops in cleanly, the contract is validated.
     - _Requirements: 9.1, 9.2, 9.3_
 
 - [ ] **28. `LayoutEngine`** — pure function `(enabledWidgetIds, orientation, sizeClass) → arrangement`.
