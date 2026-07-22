@@ -1,6 +1,7 @@
 package com.defusername.standby.data.local
 
 import com.defusername.standby.domain.model.AppSettings
+import kotlinx.serialization.json.JsonArray
 import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.JsonPrimitive
 import kotlinx.serialization.json.intOrNull
@@ -33,6 +34,16 @@ object SettingsMigration {
                 json + mapOf(
                     "schemaVersion" to JsonPrimitive(2),
                     "onboardingCompleted" to JsonPrimitive(false)
+                )
+            )
+        },
+        // v2 -> v3: adds zenModeEnabled and excludedPackages (both defaulted).
+        2 to { json ->
+            JsonObject(
+                json + mapOf(
+                    "schemaVersion" to JsonPrimitive(3),
+                    "zenModeEnabled" to JsonPrimitive(false),
+                    "excludedPackages" to JsonArray(emptyList())
                 )
             )
         }
