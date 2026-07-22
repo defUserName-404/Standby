@@ -28,12 +28,16 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.lifecycle.lifecycleScope
 import com.defusername.standby.data.SessionStateHolder
+import com.defusername.standby.data.platform.OrientationController
 import com.defusername.standby.domain.repository.NotificationRepository
 import com.defusername.standby.domain.repository.PowerStateRepository
 import com.defusername.standby.domain.repository.SettingsRepository
 import com.defusername.standby.domain.usecase.NotificationFilterUseCase
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.delay
 import java.text.SimpleDateFormat
 import java.util.Date
@@ -58,6 +62,9 @@ class StandByActivity : ComponentActivity() {
     @Inject
     lateinit var notificationFilterUseCase: NotificationFilterUseCase
 
+    @Inject
+    lateinit var orientationController: OrientationController
+
     private var wakeLock: PowerManager.WakeLock? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -72,6 +79,12 @@ class StandByActivity : ComponentActivity() {
         )
 
         acquireWakeLock()
+
+        // Apply the user's orientation preference (6.1/6.2/6.3).
+        lifecycleScope.launch {
+            val settings = settingsRepository.settings.first()
+            orientationController.apply(this@StandByActivity, settings.orientationMode)
+        }
 
         setContent {
             var timeText by remember { mutableStateOf(formatTime()) }

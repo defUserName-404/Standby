@@ -35,6 +35,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.defusername.standby.domain.model.OrientationMode
 import com.defusername.standby.domain.model.PermissionStatus
 import com.defusername.standby.domain.model.PermissionType
 import com.defusername.standby.domain.model.TriggerMode
@@ -67,6 +68,8 @@ fun SettingsScreen(viewModel: SettingsViewModel) {
             Text("StandBy", style = MaterialTheme.typography.headlineSmall, fontWeight = FontWeight.Bold)
 
             TriggerModeSection(appSettings.triggerMode, viewModel::setTriggerMode)
+
+            OrientationSection(appSettings.orientationMode, viewModel::setOrientationMode)
 
             ZenModeSection(appSettings.zenModeEnabled, viewModel::setZenMode)
 
@@ -109,6 +112,32 @@ private fun TriggerModeSection(current: TriggerMode, onSelect: (TriggerMode) -> 
                     when (mode) {
                         TriggerMode.CHARGING_ONLY -> "Only while charging"
                         TriggerMode.ALWAYS -> "Always (charging or battery)"
+                    },
+                    modifier = Modifier.padding(start = 8.dp)
+                )
+            }
+        }
+    }
+}
+
+@Composable
+private fun OrientationSection(current: OrientationMode, onSelect: (OrientationMode) -> Unit) {
+    Section(title = "Orientation", subtitle = "Lock the StandBy screen to a specific orientation or let it rotate freely") {
+        OrientationMode.entries.forEach { mode ->
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .clickable { onSelect(mode) }
+                    .padding(vertical = 8.dp),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                RadioButton(selected = mode == current, onClick = { onSelect(mode) })
+                Spacer(Modifier.height(0.dp))
+                Text(
+                    when (mode) {
+                        OrientationMode.LANDSCAPE_ONLY -> "Landscape only"
+                        OrientationMode.PORTRAIT_ONLY -> "Portrait only"
+                        OrientationMode.AUTO -> "Auto (follow device)"
                     },
                     modifier = Modifier.padding(start = 8.dp)
                 )
