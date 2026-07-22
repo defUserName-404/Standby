@@ -92,7 +92,7 @@ Check off as you go. Don't start a task whose dependencies aren't checked.
 
 ### Phase 5 — Widget system (the extensibility refactor)
 
-- [ ] **23. Define `WidgetSpec`, `WidgetDataSource` contracts** — no implementations yet, just the interfaces.
+- [x] **23. Define `WidgetSpec`, `WidgetDataSource` contracts** — no implementations yet, just the interfaces.
     - _Requirements: 9.1_
 
 - [ ] **24. `WidgetRegistry`** — Hilt multibinding assembling `WidgetSpec` + Composable renderer pairs.
