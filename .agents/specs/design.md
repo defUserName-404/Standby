@@ -56,6 +56,7 @@ All domain models are plain Kotlin data classes with zero Android framework depe
 
 ### `AppSettings` (aggregate root)
 - `schemaVersion: Int`
+- `onboardingCompleted: Boolean` (false until the first-launch permission flow is finished or dismissed)
 - `triggerMode: TriggerMode` (enum: `CHARGING_ONLY`, `ALWAYS`)
 - `orientationMode: OrientationMode` (enum: `LANDSCAPE_ONLY`, `PORTRAIT_ONLY`, `AUTO`)
 - `zenModeEnabled: Boolean`
