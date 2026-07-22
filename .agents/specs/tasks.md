@@ -126,7 +126,7 @@ Check off as you go. Don't start a task whose dependencies aren't checked.
 - [x] **32. Orientation setting UI** — landscape-only / portrait-only / auto.
     - _Requirements: 6.1, 6.2, 6.3_
 
-- [ ] **33. Verify `LayoutEngine` produces distinct arrangements per orientation** — on-device check across all three modes.
+- [x] **33. Verify `LayoutEngine` produces distinct arrangements per orientation** — on-device check across all three modes.
     - _Requirements: 6.4 (manual verification)_
 
 ---
