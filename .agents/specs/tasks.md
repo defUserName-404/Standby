@@ -113,7 +113,7 @@ Check off as you go. Don't start a task whose dependencies aren't checked.
 - [x] **29. `StandByScreenViewModel`** — reads enabled widgets from settings, subscribes only to needed data sources, asks `LayoutEngine` for arrangement.
     - _Requirements: 9.2, 9.4_
 
-- [ ] **30. Widget enable/disable + reorder UI in settings** — writes `enabledWidgetIds` back through `SettingsRepository`.
+- [x] **30. Widget enable/disable + reorder UI in settings** — writes `enabledWidgetIds` back through `SettingsRepository`.
     - _Requirements: 9.2, 10.1_
 
 ---
