@@ -6,10 +6,12 @@ import kotlinx.serialization.Serializable
 data class AppSettings(
     val schemaVersion: Int = CURRENT_SCHEMA_VERSION,
     val onboardingCompleted: Boolean = false,
-    val triggerMode: TriggerMode = TriggerMode.ALWAYS
+    val triggerMode: TriggerMode = TriggerMode.ALWAYS,
+    val zenModeEnabled: Boolean = false,
+    val excludedPackages: Set<String> = emptySet()
 ) {
     companion object {
-        const val CURRENT_SCHEMA_VERSION = 2
+        const val CURRENT_SCHEMA_VERSION = 3
     }
 }
 

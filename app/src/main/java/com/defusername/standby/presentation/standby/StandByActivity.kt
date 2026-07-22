@@ -31,6 +31,8 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.defusername.standby.data.SessionStateHolder
 import com.defusername.standby.domain.repository.NotificationRepository
 import com.defusername.standby.domain.repository.PowerStateRepository
+import com.defusername.standby.domain.repository.SettingsRepository
+import com.defusername.standby.domain.usecase.NotificationFilterUseCase
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
 import java.text.SimpleDateFormat
@@ -50,6 +52,12 @@ class StandByActivity : ComponentActivity() {
     @Inject
     lateinit var notificationRepository: NotificationRepository
 
+    @Inject
+    lateinit var settingsRepository: SettingsRepository
+
+    @Inject
+    lateinit var notificationFilterUseCase: NotificationFilterUseCase
+
     private var wakeLock: PowerManager.WakeLock? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -68,7 +76,14 @@ class StandByActivity : ComponentActivity() {
         setContent {
             var timeText by remember { mutableStateOf(formatTime()) }
             val notifications by notificationRepository.notifications.collectAsStateWithLifecycle()
-            val latest = notifications.firstOrNull()
+            val settings by settingsRepository.settings.collectAsStateWithLifecycle(initialValue = null)
+            // Reactive: re-runs whenever notifications or settings (zen/excludes) change,
+            // so toggling zen mode while StandBy is visible updates the display immediately (5.3).
+            val latest = settings?.let { s ->
+                notificationFilterUseCase.filter(
+                    notifications, s.zenModeEnabled, s.excludedPackages
+                )
+            }
 
             LaunchedEffect(Unit) {
                 while (true) {
