@@ -2,6 +2,7 @@ package com.defusername.standby.domain.layout
 
 import com.defusername.standby.domain.widget.WidgetSizeClass
 import com.defusername.standby.domain.widget.WidgetSpec
+import javax.inject.Inject
 
 enum class Orientation {
     PORTRAIT,
@@ -24,7 +25,7 @@ data class WidgetArrangement(
  * Landscape leads with compact small elements, then full-width, then medium. Ties
  * preserve the input (enable) order via a stable sort.
  */
-class LayoutEngine {
+class LayoutEngine @Inject constructor() {
 
     fun arrange(specs: List<WidgetSpec>, orientation: Orientation): WidgetArrangement {
         val comparator: Comparator<WidgetSpec> = when (orientation) {

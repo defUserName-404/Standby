@@ -8,10 +8,11 @@ data class AppSettings(
     val onboardingCompleted: Boolean = false,
     val triggerMode: TriggerMode = TriggerMode.ALWAYS,
     val zenModeEnabled: Boolean = false,
-    val excludedPackages: Set<String> = emptySet()
+    val excludedPackages: Set<String> = emptySet(),
+    val enabledWidgetIds: List<String> = emptyList()
 ) {
     companion object {
-        const val CURRENT_SCHEMA_VERSION = 3
+        const val CURRENT_SCHEMA_VERSION = 4
     }
 }
 

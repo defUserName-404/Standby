@@ -110,7 +110,7 @@ Check off as you go. Don't start a task whose dependencies aren't checked.
 - [x] **28. `LayoutEngine`** — pure function `(enabledWidgetIds, orientation, sizeClass) → arrangement`.
     - _Requirements: 6.4, 9.3_
 
-- [ ] **29. `StandByScreenViewModel`** — reads enabled widgets from settings, subscribes only to needed data sources, asks `LayoutEngine` for arrangement.
+- [x] **29. `StandByScreenViewModel`** — reads enabled widgets from settings, subscribes only to needed data sources, asks `LayoutEngine` for arrangement.
     - _Requirements: 9.2, 9.4_
 
 - [ ] **30. Widget enable/disable + reorder UI in settings** — writes `enabledWidgetIds` back through `SettingsRepository`.
