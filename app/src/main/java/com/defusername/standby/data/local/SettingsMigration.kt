@@ -46,6 +46,15 @@ object SettingsMigration {
                     "excludedPackages" to JsonArray(emptyList())
                 )
             )
+        },
+        // v3 -> v4: adds enabledWidgetIds (empty = all widgets enabled by default).
+        3 to { json ->
+            JsonObject(
+                json + mapOf(
+                    "schemaVersion" to JsonPrimitive(4),
+                    "enabledWidgetIds" to JsonArray(emptyList())
+                )
+            )
         }
     )
 }

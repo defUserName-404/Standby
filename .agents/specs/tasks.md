@@ -92,28 +92,28 @@ Check off as you go. Don't start a task whose dependencies aren't checked.
 
 ### Phase 5 — Widget system (the extensibility refactor)
 
-- [ ] **23. Define `WidgetSpec`, `WidgetDataSource` contracts** — no implementations yet, just the interfaces.
+- [x] **23. Define `WidgetSpec`, `WidgetDataSource` contracts** — no implementations yet, just the interfaces.
     - _Requirements: 9.1_
 
-- [ ] **24. `WidgetRegistry`** — Hilt multibinding assembling `WidgetSpec` + Composable renderer pairs.
+- [x] **24. `WidgetRegistry`** — Hilt multibinding assembling `WidgetSpec` + Composable renderer pairs.
     - _Requirements: 9.1_
 
-- [ ] **25. Refactor clock into a widget** — first implementation against the new contract.
+- [x] **25. Refactor clock into a widget** — first implementation against the new contract.
     - _Requirements: 9.1, 9.3_
 
-- [ ] **26. Refactor notification display into a widget** — second implementation; this is where contract gaps usually surface — fix the contract now, not later.
+- [x] **26. Refactor notification display into a widget** — second implementation; this is where contract gaps usually surface — fix the contract now, not later.
     - _Requirements: 9.1, 9.2, 9.3, 9.4_
 
-- [ ] **27. Add battery widget as the third proof case** — uses `PowerStateRepository.batteryPercent`; if this drops in cleanly, the contract is validated.
+- [x] **27. Add battery widget as the third proof case** — uses `PowerStateRepository.batteryPercent`; if this drops in cleanly, the contract is validated.
     - _Requirements: 9.1, 9.2, 9.3_
 
-- [ ] **28. `LayoutEngine`** — pure function `(enabledWidgetIds, orientation, sizeClass) → arrangement`.
+- [x] **28. `LayoutEngine`** — pure function `(enabledWidgetIds, orientation, sizeClass) → arrangement`.
     - _Requirements: 6.4, 9.3_
 
-- [ ] **29. `StandByScreenViewModel`** — reads enabled widgets from settings, subscribes only to needed data sources, asks `LayoutEngine` for arrangement.
+- [x] **29. `StandByScreenViewModel`** — reads enabled widgets from settings, subscribes only to needed data sources, asks `LayoutEngine` for arrangement.
     - _Requirements: 9.2, 9.4_
 
-- [ ] **30. Widget enable/disable + reorder UI in settings** — writes `enabledWidgetIds` back through `SettingsRepository`.
+- [x] **30. Widget enable/disable + reorder UI in settings** — writes `enabledWidgetIds` back through `SettingsRepository`.
     - _Requirements: 9.2, 10.1_
 
 ---

@@ -70,6 +70,11 @@ fun SettingsScreen(viewModel: SettingsViewModel) {
 
             ZenModeSection(appSettings.zenModeEnabled, viewModel::setZenMode)
 
+            WidgetsSection(
+                viewModel = viewModel,
+                enabledWidgetIds = appSettings.enabledWidgetIds
+            )
+
             ExcludeListSection(
                 excludedCount = appSettings.excludedPackages.size,
                 onOpenPicker = { showExcludePicker = true }
@@ -127,6 +132,45 @@ private fun ZenModeSection(enabled: Boolean, onToggle: (Boolean) -> Unit) {
         ) {
             Text(if (enabled) "On" else "Off")
             Switch(checked = enabled, onCheckedChange = onToggle)
+        }
+    }
+}
+
+@Composable
+private fun WidgetsSection(viewModel: SettingsViewModel, enabledWidgetIds: List<String>) {
+    val allSpecs = viewModel.widgetSpecs
+    val effectiveOrder = enabledWidgetIds.ifEmpty { allSpecs.map { it.id } }
+
+    Section(
+        title = "Widgets",
+        subtitle = "Enable widgets and set their display order (used as the tiebreaker within a size class)"
+    ) {
+        allSpecs.forEach { spec ->
+            val enabled = spec.id in effectiveOrder
+            val orderIndex = effectiveOrder.indexOf(spec.id)
+            Row(
+                modifier = Modifier.fillMaxWidth().padding(vertical = 4.dp),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Switch(
+                    checked = enabled,
+                    onCheckedChange = { viewModel.setWidgetEnabled(spec.id, it) }
+                )
+                Text(
+                    spec.displayName,
+                    modifier = Modifier.weight(1f).padding(start = 12.dp)
+                )
+                if (enabled) {
+                    TextButton(
+                        onClick = { viewModel.moveWidget(spec.id, towardFront = true) },
+                        enabled = orderIndex > 0
+                    ) { Text("Up") }
+                    TextButton(
+                        onClick = { viewModel.moveWidget(spec.id, towardFront = false) },
+                        enabled = orderIndex < effectiveOrder.lastIndex
+                    ) { Text("Down") }
+                }
+            }
         }
     }
 }

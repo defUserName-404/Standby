@@ -68,6 +68,23 @@ class SettingsMigrationTest {
     }
 
     @Test
+    fun `v3 fixture migrates to current schema and preserves user values`() {
+        val v3Fixture = """
+            {"schemaVersion":3,"onboardingCompleted":true,"triggerMode":"CHARGING_ONLY","zenModeEnabled":true,"excludedPackages":["com.foo"]}
+        """.trimIndent()
+
+        val migrated = SettingsMigration.migrate(json.parseToJsonElement(v3Fixture).jsonObject)
+        val settings = json.decodeFromJsonElement(AppSettings.serializer(), migrated)
+
+        assertEquals(AppSettings.CURRENT_SCHEMA_VERSION, settings.schemaVersion)
+        assertEquals(true, settings.onboardingCompleted)
+        assertEquals(TriggerMode.CHARGING_ONLY, settings.triggerMode)
+        assertEquals(true, settings.zenModeEnabled)
+        assertEquals(setOf("com.foo"), settings.excludedPackages)
+        assertTrue(settings.enabledWidgetIds.isEmpty())
+    }
+
+    @Test
     fun `v1 fixture migrates through every step to current schema`() {
         val v1Fixture = """{"schemaVersion":1,"triggerMode":"ALWAYS"}"""
 
