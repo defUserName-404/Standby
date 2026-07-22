@@ -44,7 +44,7 @@ Check off as you go. Don't start a task whose dependencies aren't checked.
 - [x] **10. `PermissionRepository` + `PermissionState`** — single source of truth for the three grants: `POST_NOTIFICATIONS` (runtime check; treated as granted pre-API 33), notification-listener (`getEnabledListenerPackages()`), battery-optimization exemption (`PowerManager.isIgnoringBatteryOptimizations`). Exposes re-checkable state so UI can refresh on resume.
     - _Requirements: 11.3, 11.4_
 
-- [ ] **11. Stub `StandByNotificationListenerService` + manifest declaration** — minimal no-op `NotificationListenerService` with `BIND_NOTIFICATION_LISTENER_SERVICE` so the app appears in Settings → Notification access (without this, the onboarding deep-link has nothing to land on). Mapper/repository wiring stays in Phase 3.
+- [x] **11. Stub `StandByNotificationListenerService` + manifest declaration** — minimal no-op `NotificationListenerService` with `BIND_NOTIFICATION_LISTENER_SERVICE` so the app appears in Settings → Notification access (without this, the onboarding deep-link has nothing to land on). Mapper/repository wiring stays in Phase 3.
     - _Requirements: 11.2, 4.1_
 
 - [ ] **12. `AppSettings.onboardingCompleted` + `schemaVersion` bump + `SettingsMigration` scaffolding** — first-launch detection lives in the single settings aggregate; add the migration hook even though v1→v2 only adds a defaulted field.
