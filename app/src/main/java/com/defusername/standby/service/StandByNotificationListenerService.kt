@@ -4,6 +4,7 @@ import android.service.notification.NotificationListenerService
 import android.service.notification.StatusBarNotification
 import android.util.Log
 import com.defusername.standby.data.notification.NotificationMapper
+import com.defusername.standby.domain.repository.NotificationRepository
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -12,6 +13,9 @@ class StandByNotificationListenerService : NotificationListenerService() {
 
     @Inject
     lateinit var notificationMapper: NotificationMapper
+
+    @Inject
+    lateinit var notificationRepository: NotificationRepository
 
     override fun onListenerConnected() {
         Log.i(TAG, "Notification listener connected")
@@ -23,14 +27,12 @@ class StandByNotificationListenerService : NotificationListenerService() {
 
     override fun onNotificationPosted(sbn: StatusBarNotification?) {
         val entry = sbn?.let(notificationMapper::map) ?: return
-        Log.d(TAG, "Notification posted: ${entry.appLabel} — ${entry.title}")
-        // Forwarding to NotificationRepository lands in task 16.
+        notificationRepository.onPosted(entry)
     }
 
     override fun onNotificationRemoved(sbn: StatusBarNotification?) {
         val entry = sbn?.let(notificationMapper::map) ?: return
-        Log.d(TAG, "Notification removed: ${entry.appLabel} — ${entry.title}")
-        // Forwarding to NotificationRepository lands in task 16.
+        notificationRepository.onRemoved(entry.id)
     }
 
     private companion object {

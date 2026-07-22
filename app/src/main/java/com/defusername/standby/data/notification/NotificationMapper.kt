@@ -29,8 +29,8 @@ class NotificationMapper @Inject constructor(
             packageName = sbn.packageName,
             appLabel = resolveAppLabel(sbn.packageName),
             iconRef = resolveIconRef(sbn),
-            title = sbn.notification.extras.getCharSequence(Notification.EXTRA_TITLE)?.toString().orEmpty(),
-            text = sbn.notification.extras.getCharSequence(Notification.EXTRA_TEXT)?.toString().orEmpty(),
+            title = sbn.notification.extras?.getCharSequence(Notification.EXTRA_TITLE)?.toString().orEmpty(),
+            text = sbn.notification.extras?.getCharSequence(Notification.EXTRA_TEXT)?.toString().orEmpty(),
             postedAt = Instant.ofEpochMilli(sbn.postTime),
             isSensitive = sbn.notification.visibility == Notification.VISIBILITY_SECRET
         )
