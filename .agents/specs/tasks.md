@@ -107,7 +107,7 @@ Check off as you go. Don't start a task whose dependencies aren't checked.
 - [x] **27. Add battery widget as the third proof case** — uses `PowerStateRepository.batteryPercent`; if this drops in cleanly, the contract is validated.
     - _Requirements: 9.1, 9.2, 9.3_
 
-- [ ] **28. `LayoutEngine`** — pure function `(enabledWidgetIds, orientation, sizeClass) → arrangement`.
+- [x] **28. `LayoutEngine`** — pure function `(enabledWidgetIds, orientation, sizeClass) → arrangement`.
     - _Requirements: 6.4, 9.3_
 
 - [ ] **29. `StandByScreenViewModel`** — reads enabled widgets from settings, subscribes only to needed data sources, asks `LayoutEngine` for arrangement.
