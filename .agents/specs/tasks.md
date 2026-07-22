@@ -60,7 +60,7 @@ Check off as you go. Don't start a task whose dependencies aren't checked.
 
 ### Phase 3 — Notification pipeline
 
-- [ ] **15. `NotificationMapper` + wire into the stub listener service** — map `StatusBarNotification` to `NotificationEntry`; the service from task 11 starts forwarding real callbacks.
+- [x] **15. `NotificationMapper` + wire into the stub listener service** — map `StatusBarNotification` to `NotificationEntry`; the service from task 11 starts forwarding real callbacks.
     - _Requirements: 4.2_
 
 - [ ] **16. `NotificationRepository`** — `StateFlow<List<NotificationEntry>>` updated by listener callbacks.
