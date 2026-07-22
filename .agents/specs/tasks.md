@@ -60,16 +60,16 @@ Check off as you go. Don't start a task whose dependencies aren't checked.
 
 ### Phase 3 — Notification pipeline
 
-- [ ] **15. `NotificationMapper` + wire into the stub listener service** — map `StatusBarNotification` to `NotificationEntry`; the service from task 11 starts forwarding real callbacks.
+- [x] **15. `NotificationMapper` + wire into the stub listener service** — map `StatusBarNotification` to `NotificationEntry`; the service from task 11 starts forwarding real callbacks.
     - _Requirements: 4.2_
 
-- [ ] **16. `NotificationRepository`** — `StateFlow<List<NotificationEntry>>` updated by listener callbacks.
+- [x] **16. `NotificationRepository`** — `StateFlow<List<NotificationEntry>>` updated by listener callbacks.
     - _Requirements: 4.2, 4.3_
 
-- [ ] **17. `ListenerHealthMonitor`** — periodic re-check, prompts re-enable if silently revoked.
+- [x] **17. `ListenerHealthMonitor`** — periodic re-check, prompts re-enable if silently revoked.
     - _Requirements: 4.5_
 
-- [ ] **18. Render latest notification as plain text on `StandByActivity`** — no styling yet, just prove the data flow end to end.
+- [x] **18. Render latest notification as plain text on `StandByActivity`** — no styling yet, just prove the data flow end to end.
     - _Requirements: 4.2, 4.3_
 
 ---
