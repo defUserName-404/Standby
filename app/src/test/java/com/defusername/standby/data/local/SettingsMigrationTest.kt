@@ -8,6 +8,7 @@ import kotlinx.serialization.json.intOrNull
 import kotlinx.serialization.json.jsonObject
 import kotlinx.serialization.json.jsonPrimitive
 import org.junit.Assert.assertEquals
+import org.junit.Assert.assertTrue
 import org.junit.Test
 
 class SettingsMigrationTest {
@@ -48,6 +49,35 @@ class SettingsMigrationTest {
         assertEquals(true, settings.onboardingCompleted)
         assertEquals(TriggerMode.ALWAYS, settings.triggerMode)
         assertEquals(AppSettings.CURRENT_SCHEMA_VERSION, settings.schemaVersion)
+    }
+
+    @Test
+    fun `v2 fixture migrates to current schema and preserves user values`() {
+        val v2Fixture = """
+            {"schemaVersion":2,"onboardingCompleted":true,"triggerMode":"CHARGING_ONLY"}
+        """.trimIndent()
+
+        val migrated = SettingsMigration.migrate(json.parseToJsonElement(v2Fixture).jsonObject)
+        val settings = json.decodeFromJsonElement(AppSettings.serializer(), migrated)
+
+        assertEquals(AppSettings.CURRENT_SCHEMA_VERSION, settings.schemaVersion)
+        assertEquals(true, settings.onboardingCompleted)
+        assertEquals(TriggerMode.CHARGING_ONLY, settings.triggerMode)
+        assertEquals(false, settings.zenModeEnabled)
+        assertTrue(settings.excludedPackages.isEmpty())
+    }
+
+    @Test
+    fun `v1 fixture migrates through every step to current schema`() {
+        val v1Fixture = """{"schemaVersion":1,"triggerMode":"ALWAYS"}"""
+
+        val migrated = SettingsMigration.migrate(json.parseToJsonElement(v1Fixture).jsonObject)
+        val settings = json.decodeFromJsonElement(AppSettings.serializer(), migrated)
+
+        assertEquals(AppSettings.CURRENT_SCHEMA_VERSION, settings.schemaVersion)
+        assertEquals(false, settings.onboardingCompleted)
+        assertEquals(false, settings.zenModeEnabled)
+        assertTrue(settings.excludedPackages.isEmpty())
     }
 
     @Test

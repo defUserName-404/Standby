@@ -76,7 +76,7 @@ Check off as you go. Don't start a task whose dependencies aren't checked.
 
 ### Phase 4 — Settings, zen mode, exclude list
 
-- [ ] **19. Extend `AppSettings`** — add `zenModeEnabled`, `excludedPackages`, `schemaVersion` bump using the migration scaffolding from task 12.
+- [x] **19. Extend `AppSettings`** — add `zenModeEnabled`, `excludedPackages`, `schemaVersion` bump using the migration scaffolding from task 12.
     - _Requirements: 10.3_
 
 - [ ] **20. `ZenState` + `NotificationFilterUseCase`** — pure function `(rawList, zenState, excludeList) → DisplayableNotification`.
