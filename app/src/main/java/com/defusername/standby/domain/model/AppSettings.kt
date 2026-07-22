@@ -5,7 +5,7 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class AppSettings(
     val schemaVersion: Int = CURRENT_SCHEMA_VERSION,
-    val triggerMode: TriggerMode = TriggerMode.CHARGING_ONLY
+    val triggerMode: TriggerMode = TriggerMode.ALWAYS
 ) {
     companion object {
         const val CURRENT_SCHEMA_VERSION = 1

@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.Intent.FLAG_ACTIVITY_NEW_TASK
 import android.content.Intent.FLAG_ACTIVITY_NO_ANIMATION
+import android.util.Log
 import com.defusername.standby.data.SessionStateHolder
 import com.defusername.standby.presentation.standby.StandByActivity
 import dagger.hilt.android.qualifiers.ApplicationContext
@@ -16,11 +17,19 @@ class StandByLauncher @Inject constructor(
     private val sessionStateHolder: SessionStateHolder
 ) {
     fun launch() {
-        if (sessionStateHolder.isStandByCurrentlyShowing.value) return
+        if (sessionStateHolder.isStandByCurrentlyShowing.value) {
+            Log.d(TAG, "Launch blocked: StandBy already showing")
+            return
+        }
+        Log.d(TAG, "Launching StandByActivity")
         val intent = Intent(context, StandByActivity::class.java).apply {
             addFlags(FLAG_ACTIVITY_NEW_TASK or FLAG_ACTIVITY_NO_ANIMATION)
         }
         context.startActivity(intent)
         sessionStateHolder.show()
+    }
+
+    companion object {
+        private const val TAG = "StandBy"
     }
 }

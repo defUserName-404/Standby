@@ -6,6 +6,7 @@ import android.app.Service
 import android.content.Intent
 import android.content.pm.ServiceInfo
 import android.os.IBinder
+import android.util.Log
 import androidx.core.app.NotificationCompat
 import com.defusername.standby.R
 import com.defusername.standby.data.platform.StandByLauncher
@@ -35,6 +36,7 @@ class StandByMonitorService : Service() {
 
     override fun onCreate() {
         super.onCreate()
+        Log.d(TAG, "Service created")
         createNotificationChannel()
         startForeground(
             NOTIFICATION_ID,
@@ -60,6 +62,7 @@ class StandByMonitorService : Service() {
     private fun collectLaunchEvents() {
         serviceScope.launch {
             triggerEvaluator.launchEvents.collect {
+                Log.d(TAG, "Launch event received, launching StandBy")
                 standByLauncher.launch()
             }
         }
@@ -86,6 +89,7 @@ class StandByMonitorService : Service() {
         .build()
 
     companion object {
+        private const val TAG = "StandBy"
         const val CHANNEL_ID = "standby_monitor"
         const val NOTIFICATION_ID = 1
     }

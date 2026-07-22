@@ -1,6 +1,9 @@
 package com.defusername.standby.presentation.standby
 
 import android.os.Bundle
+import android.os.PowerManager
+import android.util.Log
+import android.view.WindowManager
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.background
@@ -37,12 +40,20 @@ class StandByActivity : ComponentActivity() {
     @Inject
     lateinit var powerStateRepository: PowerStateRepository
 
+    private var wakeLock: PowerManager.WakeLock? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        Log.d(TAG, "onCreate")
 
         setShowWhenLocked(true)
         setTurnScreenOn(true)
-        window.addFlags(android.view.WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
+        window.addFlags(
+            WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON or
+            WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD
+        )
+
+        acquireWakeLock()
 
         setContent {
             var timeText by remember { mutableStateOf(formatTime()) }
@@ -55,10 +66,13 @@ class StandByActivity : ComponentActivity() {
             }
 
             LaunchedEffect(Unit) {
+                var lastIsScreenOn = true
                 powerStateRepository.state.collect { state ->
-                    if (!state.isScreenOn) {
+                    if (!lastIsScreenOn && state.isScreenOn) {
+                        Log.d(TAG, "Screen turned on, finishing")
                         finish()
                     }
+                    lastIsScreenOn = state.isScreenOn
                 }
             }
 
@@ -67,7 +81,10 @@ class StandByActivity : ComponentActivity() {
                     .fillMaxSize()
                     .background(Color.Black)
                     .pointerInput(Unit) {
-                        detectTapGestures { finish() }
+                        detectTapGestures {
+                            Log.d(TAG, "Tap detected, finishing")
+                            finish()
+                        }
                     },
                 contentAlignment = Alignment.Center
             ) {
@@ -82,12 +99,63 @@ class StandByActivity : ComponentActivity() {
         }
     }
 
+    override fun onResume() {
+        super.onResume()
+        Log.d(TAG, "onResume")
+    }
+
+    override fun onPause() {
+        Log.d(TAG, "onPause")
+        super.onPause()
+    }
+
+    override fun onStop() {
+        Log.d(TAG, "onStop")
+        super.onStop()
+    }
+
+    override fun onWindowFocusChanged(hasFocus: Boolean) {
+        super.onWindowFocusChanged(hasFocus)
+        Log.d(TAG, "onWindowFocusChanged: hasFocus=$hasFocus")
+    }
+
     override fun onDestroy() {
+        Log.d(TAG, "onDestroy")
+        releaseWakeLock()
         sessionStateHolder.dismiss()
         super.onDestroy()
     }
 
+    private fun acquireWakeLock() {
+        try {
+            val pm = getSystemService(POWER_SERVICE) as PowerManager
+            wakeLock = pm.newWakeLock(
+                PowerManager.PARTIAL_WAKE_LOCK,
+                "StandBy::ActivityWakeLock"
+            ).apply {
+                acquire(10 * 60 * 1000L) // 10 minutes max
+            }
+            Log.d(TAG, "WakeLock acquired")
+        } catch (e: SecurityException) {
+            Log.e(TAG, "WAKE_LOCK permission not granted, continuing without WakeLock", e)
+        }
+    }
+
+    private fun releaseWakeLock() {
+        wakeLock?.let {
+            if (it.isHeld) {
+                it.release()
+                Log.d(TAG, "WakeLock released")
+            }
+        }
+        wakeLock = null
+    }
+
     private fun formatTime(): String {
         return SimpleDateFormat("HH:mm", Locale.getDefault()).format(Date())
+    }
+
+    companion object {
+        private const val TAG = "StandBy"
     }
 }
