@@ -6,6 +6,8 @@ import android.content.Intent.ACTION_SCREEN_ON
 import android.content.Intent.ACTION_USER_PRESENT
 import android.content.Intent.ACTION_POWER_CONNECTED
 import android.content.Intent.ACTION_POWER_DISCONNECTED
+import android.os.BatteryManager
+import android.os.PowerManager
 import com.defusername.standby.data.platform.ScreenPowerReceiver
 import com.defusername.standby.domain.model.PowerState
 import com.defusername.standby.domain.repository.PowerStateRepository
@@ -41,6 +43,17 @@ class PowerStateRepositoryImpl @Inject constructor(
         }
         context.registerReceiver(receiver, filter)
         registered = true
+        snapshotCurrentPowerState()
+    }
+
+    private fun snapshotCurrentPowerState() {
+        val pm = context.getSystemService(Context.POWER_SERVICE) as PowerManager
+        val bm = context.getSystemService(Context.BATTERY_SERVICE) as BatteryManager
+        _state.value = PowerState(
+            isScreenOn = pm.isInteractive,
+            isCharging = bm.isCharging,
+            batteryPercent = bm.getIntProperty(BatteryManager.BATTERY_PROPERTY_CAPACITY)
+        )
     }
 
     fun unregisterReceiver() {

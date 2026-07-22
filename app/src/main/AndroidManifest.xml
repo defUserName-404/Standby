@@ -6,6 +6,8 @@
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE_SPECIAL_USE" />
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
 
     <application
         android:name=".StandByApplication"
@@ -33,6 +35,8 @@
             android:name=".presentation.standby.StandByActivity"
             android:exported="false"
             android:taskAffinity=""
+            android:excludeFromRecents="true"
+            android:noHistory="true"
             android:showOnLockScreen="true"
             android:showWhenLocked="true"
             android:theme="@style/Theme.Standby.Overlay" />
@@ -44,6 +48,15 @@
             <property
                 android:name="android.app.PROPERTY_SPECIAL_USE_FGS_SUBTYPE"
                 android:value="screen-state-triggered display" />
+        </service>
+
+        <service
+            android:name=".service.StandByNotificationListenerService"
+            android:exported="true"
+            android:permission="android.permission.BIND_NOTIFICATION_LISTENER_SERVICE">
+            <intent-filter>
+                <action android:name="android.service.notification.NotificationListenerService" />
+            </intent-filter>
         </service>
 
         <receiver

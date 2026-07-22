@@ -1,7 +1,9 @@
 package com.defusername.standby.di
 
+import com.defusername.standby.data.repository.PermissionRepositoryImpl
 import com.defusername.standby.data.repository.PowerStateRepositoryImpl
 import com.defusername.standby.data.repository.SettingsRepositoryImpl
+import com.defusername.standby.domain.repository.PermissionRepository
 import com.defusername.standby.domain.repository.PowerStateRepository
 import com.defusername.standby.domain.repository.SettingsRepository
 import dagger.Binds
@@ -29,6 +31,12 @@ abstract class AppModule {
     abstract fun bindSettingsRepository(
         impl: SettingsRepositoryImpl
     ): SettingsRepository
+
+    @Binds
+    @Singleton
+    abstract fun bindPermissionRepository(
+        impl: PermissionRepositoryImpl
+    ): PermissionRepository
 
     companion object {
         @Provides
