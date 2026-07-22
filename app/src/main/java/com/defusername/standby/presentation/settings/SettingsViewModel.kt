@@ -6,6 +6,7 @@ import android.content.pm.PackageManager
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.defusername.standby.domain.model.AppSettings
+import com.defusername.standby.domain.model.OrientationMode
 import com.defusername.standby.domain.model.PermissionState
 import com.defusername.standby.domain.model.TriggerMode
 import com.defusername.standby.domain.repository.PermissionRepository
@@ -41,6 +42,10 @@ class SettingsViewModel @Inject constructor(
 
     fun setTriggerMode(mode: TriggerMode) {
         update { it.copy(triggerMode = mode) }
+    }
+
+    fun setOrientationMode(mode: OrientationMode) {
+        update { it.copy(orientationMode = mode) }
     }
 
     fun setZenMode(enabled: Boolean) {
